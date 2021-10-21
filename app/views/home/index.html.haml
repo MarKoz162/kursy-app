@@ -1,4 +1,40 @@
 
+.jumbotron
+  .display-4
+    What dou u want to learn today?
+  .form-inline.my-2.my-lg-0
+    = form_tag(courses_path, method: :get) do
+      .input-group
+        = text_field_tag :title, params[:title], autocomplete: 'off', placeholder: "Search" , class: 'form-control'  
+        %span.input-group-append
+          %button.btn.btn-outline-priamry{:type => "submit", :style => "background-color: red"} 
+            %i.fas.fa-search{:style => "color:white"}
+
+%hr
+%h2
+  Popular courses
+.card-group
+  - @courses.each do |course|
+    .col
+      = render 'courses/courses', course: course
+%hr
+%h2
+  Top rated courses
+.card-group
+  - @courses.each do |course|
+    .col
+      = render 'courses/courses', course: course
+%hr
+%h2
+  Recent courses
+.card-group
+  - @latest_courses.each do |course|
+    .col
+      = render 'courses/courses', course: course
+
+
+
+
 %h1 Hello World!
 = link_to  privacy_policy_path, class: "btn btn-lg btn-warning" do
   %i.fas.fa-file-word
