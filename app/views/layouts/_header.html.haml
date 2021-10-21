@@ -13,9 +13,13 @@
           =link_to courses_path, class: "nav-link" do
             .fas.fa-book
             Course
-      %form.d-flex
-        %input.form-control.me-2{"aria-label" => "Search", :placeholder => "Search", :type => "search"}/
-        %button.btn.btn-outline-success{:type => "submit"} Search
+      .form-inline.my-2.my-lg-0
+        = form_tag(courses_path, method: :get) do
+          .input-group
+            = text_field_tag :title, params[:title], autocomplete: 'off', placeholder: "Search" , class: 'form-control'  
+            %span.input-group-append
+              %button.btn.btn-outline-priamry{:type => "submit", :style => "background-color: red"} 
+                %i.fas.fa-search{:style => "color:white"}
       %ul.navbar-nav.mr-right
         - if current_user
           %li.nav-item.dropdown
