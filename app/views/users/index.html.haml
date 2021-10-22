@@ -1,0 +1,4 @@
+.card-group
+  - @user.each do |user|
+    .col
+      = render 'users/user', user: user
