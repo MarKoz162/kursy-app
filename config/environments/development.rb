@@ -4,6 +4,16 @@ Rails.application.configure do
   config.hosts << "3f11eaf674fb474bb43a54d7d1c3dd07.vfs.cloud9.eu-central-1.amazonaws.com"
   config.action_mailer.default_url_options = { host: 'https://3f11eaf674fb474bb43a54d7d1c3dd07.vfs.cloud9.eu-central-1.amazonaws.com' }
   config.action_mailer.delivery_method = :test
+  config.action_mailer.perform_deliveries = true
+  
+  config.action_mailer.smtp_settings = {
+    port: 587,
+    address: Rails.application.credentials.address,
+    user_name: Rails.application.credentials.user_name,
+    password: Rails.application.credentials.password,
+    authenticate: :plain,
+    enable_starttls_auto: true
+  }
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded any time
@@ -37,7 +47,7 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   config.action_mailer.perform_caching = false
 

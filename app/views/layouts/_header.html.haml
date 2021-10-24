@@ -21,13 +21,12 @@
           =link_to users_path, class: "nav-link" do
             .fas.fa-users
             Users       
-      .form-inline.my-2.my-lg-0
-        = form_tag(courses_path, method: :get) do
-          .input-group
-            = text_field_tag :title, params[:title], autocomplete: 'off', placeholder: "Search" , class: 'form-control'  
-            %span.input-group-append
-              %button.btn.btn-outline-priamry{:type => "submit", :style => "background-color: red"} 
-                %i.fas.fa-search{:style => "color:white"}
+      = search_form_for @ransack_courses, as: :courses_search, url: courses_path do |f|
+        .input-group
+          = f.search_field :title_cont, class: 'form-control-sm', style: 'float: left; width: 150px;'
+          %span.input.group-append
+            %button.btn.btn-primary.btn-sm{:type => 'sumbit'}
+              %span.fa.fa-search{"aria-hidden" => "true"}
       %ul.navbar-nav.mr-right
         - if current_user
           %li.nav-item.dropdown

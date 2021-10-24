@@ -1,15 +1,20 @@
-.card{:style => "margin: 5px"}
+.card{:style => "margin: 5px; min-width: 250px;"}
   .card-header
     .fa.fa-book
     = link_to course.title, course_path(course)
   .card-body
-    = course.description
+    %small= simple_format(course.short_description)
+  .card-footer
+    = course.language
+    = course.level
+  .card-footer
+    = number_to_currency(course.price)
   .card-footer
     .far.fa-clock
     = course.created_at.strftime('%d-%b-%Y')
     %br/
     .far.fa-user
-    = course.user
+    = course.user.username
   .card-footer
     %td= link_to 'Show', course, class: 'btn btn-sm btn-primary'
     %td= link_to 'Edit', edit_course_path(course), class: 'btn btn-sm btn-warning'

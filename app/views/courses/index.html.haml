@@ -2,11 +2,31 @@
 %h1 
   Courses:
   = @courses.count
-
-.card-group
-  - @courses.each do |course|
-    .col
-      = render 'courses/courses', course: course
+.row
+  .col-md-2
+    = search_form_for @ransack_courses, as: :courses_search, url: courses_path do |f|
+      = f.label :title
+      = f.search_field :title_cont, placeholder: 'title',class: 'form-control form-control-sm'
+      = f.label :description
+      = f.search_field :description_cont, placeholder: 'description',class: 'form-control form-control-sm'
+      = f.label :short_description
+      = f.search_field :short_description_cont, placeholder: 'short description',class: 'form-control form-control-sm'
+      = f.label :price
+      = f.search_field :price_cont, placeholder: 'price',class: 'form-control form-control-sm'
+      = f.label :language
+      = f.select :language_cont, Course.languages, include_blank: true, class: 'form-control form-control-sm'
+      %br
+      = f.label :level
+      = f.select :level_eq, Course.levels, include_blank: true, class: 'form-control form-control-sm'
+      = f.label :email
+      = f.search_field :user_email_cont, placeholder: 'email',class: 'form-control form-control-sm'
+      = f.submit 
+    = link_to 'refresh', courses_path
+  .col-md-10
+    .card-group
+      - @courses.each do |course|
+        .col
+          = render 'courses/courses', course: course
 
 %br
 

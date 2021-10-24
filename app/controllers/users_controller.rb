@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   def index
-    @user = User.all.order(created_at: :desc)
+   @q = User.ransack(params[:q])
+   @user = @q.result(distinct: true)
   end      
 end
 

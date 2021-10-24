@@ -27,6 +27,8 @@ gem 'faker'
 gem 'devise', '~> 4.8'
 
 gem 'friendly_id', '~> 5.4.0'
+
+gem 'ransack'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password

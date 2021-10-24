@@ -8,6 +8,7 @@
 #
 # Use this setup block to configure all options available in SimpleForm.
 SimpleForm.setup do |config|
+  
   # Wrappers are used by the form builder to generate a
   # complete input. You can remove any component from the
   # wrapper, change the order or even add your own to the
@@ -74,7 +75,7 @@ SimpleForm.setup do |config|
   config.boolean_style = :nested
 
   # Default class for buttons
-  config.button_class = 'btn'
+  config.button_class = 'btn btn-success'
 
   # Method used to tidy up errors. Specify any Rails Array method.
   # :first lists the first message for each field.

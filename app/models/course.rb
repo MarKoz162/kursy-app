@@ -1,5 +1,5 @@
 class Course < ApplicationRecord
-  validates :title, presence: true
+  validates :title, :short_description, :language, :price, :level, presence: true
   validates :description, presence: true
   
   belongs_to :user
@@ -13,5 +13,14 @@ class Course < ApplicationRecord
   extend FriendlyId
   friendly_id :title, use: :slugged
   
+  LANGUAGES = [:"English",:"Russian",:"German"]
+  def self.languages
+    LANGUAGES.map {|language| [ language , language ] }
+  end
+  
+  LEVELS = [:"Beginner",:"Intermidate",:"Advanced"]
+  def self.levels
+    LEVELS.map {|level| [ level , level ] }
+  end
   
 end
