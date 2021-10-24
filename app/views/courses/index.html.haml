@@ -1,7 +1,9 @@
 
-%h1 
-  Courses:
-  = @courses.count
+%h3
+  .text-center
+    Courses
+    .badge.bg-primary
+      = @courses.count
 .row
   .col-md-2
     = search_form_for @ransack_courses, as: :courses_search, url: courses_path do |f|

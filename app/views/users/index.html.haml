@@ -1,3 +1,9 @@
+%h3
+  .text-center
+    Users
+    .badge.bg-primary
+      = @user.count
+
 .card-group
   - @user.each do |user|
     .col

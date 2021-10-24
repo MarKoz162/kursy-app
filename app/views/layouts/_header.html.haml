@@ -20,13 +20,18 @@
         %li.nav-item{:class => "#{'active font-weight-bold' if current_page?(users_path)}"}
           =link_to users_path, class: "nav-link" do
             .fas.fa-users
-            Users       
-      = search_form_for @ransack_courses, as: :courses_search, url: courses_path do |f|
-        .input-group
-          = f.search_field :title_cont, class: 'form-control-sm', style: 'float: left; width: 150px;'
-          %span.input.group-append
-            %button.btn.btn-primary.btn-sm{:type => 'sumbit'}
-              %span.fa.fa-search{"aria-hidden" => "true"}
+            Users
+        %li.nav-item{:class => "#{'active font-weight-bold' if current_page?(activity_path)}"}
+          =link_to activity_path, class: "nav-link" do
+            .fas.fa-bell
+            Activity  
+      - if current_user        
+        = search_form_for @ransack_courses, as: :courses_search, url: courses_path do |f|
+          .input-group
+            = f.search_field :title_cont, class: 'form-control-sm', style: 'float: left; width: 150px;'
+            %span.input.group-append
+              %button.btn.btn-primary.btn-sm{:type => 'sumbit'}
+                %span.fa.fa-search{"aria-hidden" => "true"}
       %ul.navbar-nav.mr-right
         - if current_user
           %li.nav-item.dropdown

@@ -2,14 +2,14 @@
 .jumbotron
   .display-4
     What dou u want to learn today?
-  .form-inline.my-2.my-lg-0
-    = form_tag(courses_path, method: :get) do
-      .input-group
-        = text_field_tag :title, params[:title], autocomplete: 'off', placeholder: "Search" , class: 'form-control'  
-        %span.input-group-append
-          %button.btn.btn-outline-priamry{:type => "submit", :style => "background-color: red"} 
-            %i.fas.fa-search{:style => "color:white"}
-
+  - if current_user  
+    .form-inline.my-2.my-lg-0
+      = search_form_for @ransack_courses, as: :courses_search, url: courses_path do |f|
+        .input-group
+          = f.search_field :title_cont, class: 'form-control-sm', style: 'float: left; width: 150px;',placeholder: "Search"
+          %span.input.group-append
+            %button.btn.btn-primary.btn-sm{:type => 'sumbit'}
+              %span.fa.fa-search{"aria-hidden" => "true"}
 %hr
 %h2
   Popular courses
