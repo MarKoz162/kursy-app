@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :courses
-  resources :users
+  resources :users, only: [:index, :edit, :show, :update]
   root 'home#index'
   get "privacy_policy", to: "static_pages#privacy_policy"
   get "activity", to: "home#activity" 

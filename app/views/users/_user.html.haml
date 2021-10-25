@@ -29,4 +29,6 @@
       .badge.bg-danger No
   .card-footer
     - user.roles.each do |role|
-      = role.name
+      .badge.bg-primary
+        = role.name
+    = link_to "Edit roles", edit_user_path(user),class: 'btn btn-sm btn-warning'

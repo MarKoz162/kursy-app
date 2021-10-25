@@ -5,23 +5,23 @@
       %span.navbar-toggler-icon
     #navbarSupportedContent.collapse.navbar-collapse
       %ul.navbar-nav.me-auto.mb-2.mb-lg-0
-        %li.nav-item{:class => "#{'active font-weight-bold' if current_page?(root_path)}"}
+        %li.nav-item{:class => "#{"active font-weight-bold" if current_page?(root_path)}"}
           = link_to root_path, class: "nav-link" do
             .fas.fa-home
             Home
-        %li.nav-item{:class => "#{'active font-weight-bold' if current_page?(courses_path)}"}
+        %li.nav-item{:class => "#{"active font-weight-bold" if current_page?(courses_path)}"}
           =link_to courses_path, class: "nav-link" do
             .fas.fa-book
             Course
-        %li.nav-item{:class => "#{'active font-weight-bold' if current_page?(new_course_path)}"}
+        %li.nav-item{:class => "#{"active font-weight-bold" if current_page?(new_course_path)}"}
           =link_to new_course_path, class: "nav-link" do
             .fas.fa-plus
             New Course
-        %li.nav-item{:class => "#{'active font-weight-bold' if current_page?(users_path)}"}
+        %li.nav-item{:class => "#{"active font-weight-bold" if current_page?(users_path)}"}
           =link_to users_path, class: "nav-link" do
             .fas.fa-users
             Users
-        %li.nav-item{:class => "#{'active font-weight-bold' if current_page?(activity_path)}"}
+        %li.nav-item{:class => "#{"active font-weight-bold" if current_page?(activity_path)}"}
           =link_to activity_path, class: "nav-link" do
             .fas.fa-bell
             Activity  
