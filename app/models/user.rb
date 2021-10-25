@@ -20,7 +20,8 @@ class User < ApplicationRecord
   end
   
    after_create :assign_default_role
-
+  
+  validate :must_have_a_role, on: :update
   
    def assign_default_role
     if User.count == 1
@@ -33,4 +34,11 @@ class User < ApplicationRecord
     end
   end
   
+  private
+  
+  def must_have_a_role
+    unless roles.any?
+      errors.add(:roles, "must have at least one role")
+    end
+  end  
 end
