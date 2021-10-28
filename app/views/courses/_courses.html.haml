@@ -17,7 +17,7 @@
     = course.created_at.strftime('%d-%b-%Y')
     %br/
     .far.fa-user
-    = course.user.username
+    = link_to course.user.username, user_path(course.user)
   .card-footer
     %td= link_to 'Show', course, class: 'btn btn-sm btn-primary'
     %td= link_to 'Edit', edit_course_path(course), class: 'btn btn-sm btn-warning' if policy(course).edit?
