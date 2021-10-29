@@ -36,6 +36,8 @@ gem "rolify"
 
 gem 'pundit', '~> 2.1', '>= 2.1.1'
 
+gem 'exception_notification', '~> 4.4', '>= 4.4.3'
+
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
