@@ -8,6 +8,6 @@
     = f.label :content
     = f.rich_text_area :content
     %small= f.error :description, class: 'text-danger'
-
+  %p
   .form-actions
-    = f.button :submit
+    = f.button :submit, class: 'btn btn-success'

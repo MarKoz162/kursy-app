@@ -4,10 +4,10 @@
     .badge.bg-primary
       = @user.count
 
-.card-group
-  - @user.each do |user|
-    .col
-      = render 'users/user', user: user
+/.card-group
+/  - @user.each do |user|
+/    .col
+/      = render 'users/user', user: user
       
 = search_form_for @q do |f|
   = f.search_field :email_or_sign_in_count_eq, placeholder: 'email or sign in count'
@@ -25,6 +25,8 @@
       %th= 'last_sign_in_at'.humanize
       %th= 'current_sign_in_ip'.humanize
       %th= 'last_sign_in_ip'.humanize
+      %th Confirmed?
+      %th roles
   %tbody
     - @user.each do |user|
       %tr
@@ -36,3 +38,10 @@
         %td= user.last_sign_in_at
         %td= user.current_sign_in_ip
         %td= user.last_sign_in_ip
+        %td= user.confirmed?
+        %td
+          - user.roles.each do |role|
+            .badge.bg-info
+              = role.name
+          - if policy(user).edit?
+            = link_to 'Edit Roles', edit_user_path(user), class: "btn btn-sm btn-warning"

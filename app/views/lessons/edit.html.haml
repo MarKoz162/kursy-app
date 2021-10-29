@@ -1,6 +1,16 @@
+= link_to 'Courses', courses_path
+\/
+= link_to @course.title , course_path(@course)
+\/
+= link_to @lesson.title , course_lesson_path(@course, @lesson)
+\/
+Edit
+%p
 .card
-  .card-headder
-    %h1 Editing lesson
+  .card-header
+    %h3
+      .far.fa-check-square
+      New lesson
   .card-body
     = render 'form'
   .card-footer
