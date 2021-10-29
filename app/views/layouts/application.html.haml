@@ -2,7 +2,8 @@
 %html
   %head
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title KursyApp
+    %title
+      = content_for?(:title) ? yield(:title) : "kursy-app"
     %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
     %meta{:content => "text/html; charset-UTF-8", "http-equiv" => "Content-Type"}/
     = csrf_meta_tags
