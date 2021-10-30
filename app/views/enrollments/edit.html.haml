@@ -6,11 +6,11 @@
 .card
   .card-header
     %h3
-      .fa.fa-book
-      Editing enrollment
+      .text-warning.fa.fa-star
+      Add A Review
   .card-body
     = render 'form'
   .card-footer
-    = link_to 'Show', @enrollment
+    = link_to 'Show review', @enrollment
     \|
-    = link_to 'Back', enrollments_path
+    = link_to 'Back to course', course_path(@enrollment.course)
