@@ -24,7 +24,11 @@
         %li.nav-item{:class => "#{"active font-weight-bold" if current_page?(activity_path)}"}
           =link_to activity_path, class: "nav-link" do
             .fas.fa-bell
-            Activity  
+            Activity
+        %li.nav-item{:class => "#{"active font-weight-bold" if current_page?(enrollments_path)}"}
+          =link_to enrollments_path, class: "nav-link" do
+            .fas.fa-lock-open
+            Enrollments
       - if current_user        
         = search_form_for @ransack_courses, as: :courses_search, url: courses_path do |f|
           .input-group
