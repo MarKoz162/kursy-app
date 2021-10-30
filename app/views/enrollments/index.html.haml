@@ -9,32 +9,37 @@
     .badge.bg-primary
       = @enrollments.count
 
+= search_form_for @q, url: @ransack_path do |f|
+  = f.search_field :user_email_cont, placeholder: 'email'
+  = f.search_field :course_title_cont, placeholder: 'course title'
+  = f.search_field :price_eq, placeholder: 'price'
+  = f.search_field :review_cont, placeholder: 'Review'
+  = f.search_field :rating_eq, placeholder: 'Rating'
+  = f.submit 
+  
+  = link_to @ransack_path, class: 'btn btn-sm btn-secondary' do
+    %i.fas.fa-sync
+
 .table-responsive
   %table.table.table-bordered.table-striped.table.sm
     %thead
       %tr
         %th ID
-        %th
-          .fa.fa-user
-          User
+        %th= sort_link(@q, :user_email)
         %th{:style => "min-width: 100px;"} 
-          .fa.fa-book
-          Course
-        %th 
-          .fa.fa-clock
-          bought
+          = sort_link(@q, :course_title)
+        %th{:style => "min-width: 125px;"} 
+          = sort_link(@q, :created_at) 
         %th
-          .fa.fa-dollar-sign
-          Price
+          = sort_link(@q, :price)
         %th{:style => "min-width: 135px;"}
-          .text-warning.fa.fa-clock
-          Reviewed on  
+          = sort_link(@q, :updated_at) 
         %th
           .text-warning.fas.fa-comment
           Review
-        %th{:style => "min-width: 90px;"} 
+        %th{:style => "min-width: 110px;"}
+          = sort_link(@q, :rating) 
           .text-warning.fa.fa-star
-          Rating
         %th
         %th
         %th
@@ -59,4 +64,4 @@
 
 %br
 
-= link_to 'New Enrollment', new_enrollment_path
+!= pagy_bootstrap_nav(@pagy)

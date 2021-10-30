@@ -21,14 +21,62 @@
           =link_to users_path, class: "nav-link" do
             .fas.fa-users
             Users
-        %li.nav-item{:class => "#{"active font-weight-bold" if current_page?(activity_path)}"}
-          =link_to activity_path, class: "nav-link" do
-            .fas.fa-bell
-            Activity
-        %li.nav-item{:class => "#{"active font-weight-bold" if current_page?(enrollments_path)}"}
-          =link_to enrollments_path, class: "nav-link" do
-            .fas.fa-lock-open
-            Enrollments
+        
+        
+        - if  current_user&.has_role?(:student)  
+          %li.nav-item.dropdown
+            %a#studentDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "data-bs-toggle" => "dropdown", :href => "#", :role => "button"}
+              .fa.fa-graduation-cap
+              Learn
+            %ul.dropdown-menu{"aria-labelledby" => "navbarDropdown"}
+              %li
+                =link_to purchased_courses_path, class: "dropdown-item" do
+                  .fas.fa-book
+                  My courses
+              %li
+                =link_to pending_review_courses_path, class: "dropdown-item" do
+                  .fas.fa-book
+                  Pending Review  
+        
+        - if  current_user&.has_role?(:teacher)  
+          %li.nav-item.dropdown
+            %a#teacherDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "data-bs-toggle" => "dropdown", :href => "#", :role => "button"}
+              .fa.fa-chalkboard-teacher
+              Teacher
+            %ul.dropdown-menu{"aria-labelledby" => "navbarDropdown"}
+              %li
+                =link_to new_course_path, class: "dropdown-item" do
+                  .fas.fa-plus
+                  New Course
+              %li
+                =link_to created_courses_path, class: "dropdown-item" do
+                  .fas.fa-book
+                  Created courses
+              %li
+                =link_to my_students_enrollments_path, class: "dropdown-item" do
+                  .fas.fa-book
+                  My students   
+                  
+        - if  current_user&.has_role?(:admin)  
+          %li.nav-item.dropdown
+            %a#adminDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "data-bs-toggle" => "dropdown", :href => "#", :role => "button"}
+              .fa.fa-tools
+              Admin
+            %ul.dropdown-menu{"aria-labelledby" => "navbarDropdown"}
+              %li
+                =link_to users_path, class: "dropdown-item" do
+                  .fas.fa-users
+                  Users
+              %li    
+                =link_to enrollments_path, class: "dropdown-item" do
+                  .fas.fa-lock-open
+                  Enrollments
+              %li
+                =link_to activity_path, class:"dropdown-item" do
+                  .fa.fa-bell
+                  Activity
+        
+              
       - if current_user        
         = search_form_for @ransack_courses, as: :courses_search, url: courses_path do |f|
           .input-group
@@ -45,7 +93,9 @@
               %li
                 = link_to "Edit" , edit_user_registration_path, class:"dropdown-item"
               %li
-                = link_to "Log out", destroy_user_session_path, method: :delete, class:"dropdown-item"
+                = link_to destroy_user_session_path, method: :delete, class:"dropdown-item" do
+                  .fas.fa-sign-out-alt
+                  Log out
         - else
           %li.nav-item
             = link_to "Log in", new_user_session_path, class:"nav-link"

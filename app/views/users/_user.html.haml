@@ -36,3 +36,4 @@
       .badge.bg-primary
         = role.name
     = link_to "Edit roles", edit_user_path(user),class: 'btn btn-sm btn-warning' if policy(user).edit?
+  != pagy_bootstrap_nav(@pagy)  

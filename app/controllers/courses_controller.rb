@@ -8,7 +8,7 @@ class CoursesController < ApplicationController
     #else
       #@q = Course.ransack(params[:q])
       #@courses = @q.result.includes(:user)
-      
+      @ransack_path = courses_path
       @ransack_courses = Course.ransack(params[:courses_search], search_key: :courses_search)
       #@courses = @ransack_courses.result.includes(:user)
       
@@ -16,23 +16,41 @@ class CoursesController < ApplicationController
     #end
   end
 
-  # GET /courses/1 or /courses/1.json
+  def purchased
+    @ransack_path = purchased_courses_path
+    @ransack_courses = Course.joins(:enrollments).where(enrollments: {user: current_user}).ransack(params[:courses_search], search_key: :courses_search)
+    @pagy, @courses = pagy(@ransack_courses.result.includes(:user))
+    render 'index'
+  end
+  
+  
+  def pending_review
+    @ransack_path = pending_review_courses_path
+    @ransack_courses = Course.joins(:enrollments).merge(Enrollment.pending_review.where(user: current_user)).ransack(params[:courses_search], search_key: :courses_search)
+    @pagy, @courses = pagy(@ransack_courses.result.includes(:user))
+    render 'index'
+  end
+  
+  def created
+    @ransack_path = created_courses_path
+    @ransack_courses = Course.where(user: current_user).ransack(params[:courses_search], search_key: :courses_search)
+    @pagy, @courses = pagy(@ransack_courses.result.includes(:user))
+    render 'index'
+  end  
+  
   def show
     @lessons = @course.lessons
   end
 
-  # GET /courses/new
   def new
     @course = Course.new
     authorize @course
   end
 
-  # GET /courses/1/edit
   def edit
     authorize @course
   end
 
-  # POST /courses or /courses.json
   def create
     @course = Course.new(course_params)
     authorize @course
@@ -48,7 +66,6 @@ class CoursesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /courses/1 or /courses/1.json
   def update
     authorize @course
     respond_to do |format|
@@ -62,7 +79,6 @@ class CoursesController < ApplicationController
     end
   end
 
-  # DELETE /courses/1 or /courses/1.json
   def destroy
     authorize @course
     @course.destroy
