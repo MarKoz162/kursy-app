@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
- 
-  resources :enrollments
+  resources :enrollments, expect: [:new,:create]
   devise_for :users
   resources :courses do
     resources :lessons
+    resources :enrollments, only: [:new,:create]
   end
   resources :users, only: [:index, :edit, :show, :update]
   root 'home#index'

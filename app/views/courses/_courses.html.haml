@@ -8,7 +8,7 @@
     = course.language
     = course.level
   .card-footer
-    = number_to_currency(course.price)
+    = enrollment_button(course)
   .card-footer
     .fa.fa-book-open
     = course.lessons.count
