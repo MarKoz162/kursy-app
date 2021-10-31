@@ -16,15 +16,19 @@ class CoursePolicy < ApplicationPolicy
   
    
   def new?
-    @user&.has_role?(:admin)
+    @user&.has_role?(:teacher)
   end
   
    
   def create?
-    @user&.has_role?(:admin) || @record.user == @user
+    @user&.has_role?(:teacher)
   end
   
   def destroy?
     @user&.has_role?(:admin) || @record.user == @user
   end
+  
+  def owner?
+    @record.user == @user
+  end  
 end

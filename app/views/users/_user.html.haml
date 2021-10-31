@@ -26,6 +26,11 @@
     = 'last_sign_in_ip'.humanize
     = user.last_sign_in_ip
   .card-footer
+    Courses Created:
+    = user.courses_count
+    Enrollments:
+    = user.enrollments_count
+  .card-footer
     Confirmed email?
     -if user.confirmed_at.present?
       .badge.bg-success Yes
@@ -36,4 +41,3 @@
       .badge.bg-primary
         = role.name
     = link_to "Edit roles", edit_user_path(user),class: 'btn btn-sm btn-warning' if policy(user).edit?
-  != pagy_bootstrap_nav(@pagy)  

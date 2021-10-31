@@ -3,8 +3,9 @@ class Course < ApplicationRecord
   tracked owner: Proc.new{ |controller, model| controller.current_user}
   validates :title, :short_description, :language, :price, :level, presence: true
   validates :description, presence: true
+  validates :title, uniqueness: true
   
-  belongs_to :user
+  belongs_to :user, counter_cache: true
   has_many :lessons, dependent: :destroy
   has_many :enrollments
   
@@ -31,4 +32,11 @@ class Course < ApplicationRecord
     self.enrollments.where(user_id: [user.id], course_id: [self.id]).empty?
   end
   
+  def update_rating
+    if enrollments.any? && enrollments.where.not(rating: nil).any?
+      update_column :average_rating, (enrollments.average(:rating).round(2).to_f)
+    else
+      update_column :average_rating, (0.0)
+    end  
+  end  
 end
