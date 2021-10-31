@@ -13,6 +13,13 @@ class Course < ApplicationRecord
       title
   end
   
+  scope :latest, -> {  limit(3).order(created_at: :desc) }
+  scope :top_rated, -> { limit(3).order(average_rating: :desc, created_at: :desc) }
+  scope :popular, -> { limit(3).order(enrollments_count: :desc, created_at: :desc) }
+  scope :purchased, -> { limit(3).joins(:enrollments).where(enrollments: {user: current_user}).order(created_at: :desc) }
+  
+  
+  
   has_rich_text :description
   
   extend FriendlyId

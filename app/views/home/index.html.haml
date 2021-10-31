@@ -16,35 +16,43 @@
             %button.btn.btn-primary.btn-sm{:type => 'sumbit'}
               %span.fa.fa-search{"aria-hidden" => "true"}
 %hr
+- if current_user && @purchased_courses.count > 0
+  %h2
+    .fa.fa-user-graduate
+    Continue learning
+  .card-group
+    - @purchased_courses.each do |course|
+      .col
+        = render 'courses/courses', course: course
+  %hr
 %h2
+  .fa.fa-chart-line
   Popular courses
 .card-group
-  - @courses.each do |course|
+  - @popular_courses.each do |course|
     .col
       = render 'courses/courses', course: course
 %hr
 %h2
+  .fa.fa-star
   Top rated courses
 .card-group
-  - @courses.each do |course|
+  - @top_rated_courses.each do |course|
     .col
       = render 'courses/courses', course: course
 %hr
 %h2
+  .fa.fa-clock
   Recent courses
 .card-group
   - @latest_courses.each do |course|
     .col
       = render 'courses/courses', course: course
-
-
-
-
-%h1 Hello World!
-= link_to  privacy_policy_path, class: "btn btn-lg btn-warning" do
-  %i.fas.fa-file-word
-  Privacy Policy
-  
-=link_to courses_path, class: 'btn btn-success' do
-  .fas.fa-book
-  Course
+%hr
+%h2
+  .fa.fa-comment
+  What our students have to say
+.card-group
+  - @latest_good_reviews.each do |enrollment|
+    .col
+      = render 'enrollments/enrollment', enrollment: enrollment
