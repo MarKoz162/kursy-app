@@ -91,6 +91,12 @@
                 =link_to statistics_path, class:"dropdown-item" do
                   .fa.fa-chart-line
                   Statistics
+              %li
+                =link_to unapproved_courses_path, class:"dropdown-item" do
+                  .fa.fa-book
+                  Unapproved
+                  .badge.bg-info
+                    = Course.unapproved.count
         
               
       - if current_user        

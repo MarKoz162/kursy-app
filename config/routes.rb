@@ -4,7 +4,11 @@ Rails.application.routes.draw do
   end  
   devise_for :users
   resources :courses do
-    get :purchased, :pending_review, :created,  on: :collection 
+    get :purchased, :pending_review, :created, :unapproved, on: :collection 
+    member do
+      patch :approve
+      patch :unapprove
+    end  
     resources :lessons
     resources :enrollments, only: [:new,:create]
   end
@@ -12,7 +16,13 @@ Rails.application.routes.draw do
   root 'home#index'
   get "privacy_policy", to: "static_pages#privacy_policy"
   get "activity", to: "home#activity" 
-  get "statistics", to: "home#statistics" 
-  
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  get "statistics", to: "home#statistics"
+
+  namespace :charts do
+    get 'users_per_day'
+    get 'enrollments_per_day'
+    get 'course_popularity'
+    get 'money_makers'
+  end
+
 end

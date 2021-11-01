@@ -18,7 +18,6 @@ class HomeController < ApplicationController
   
   def statistics
     if current_user&.has_role?(:admin)
-      @users = User.all
       @enrollments = Enrollment.all
       @courses = Course.all
     else

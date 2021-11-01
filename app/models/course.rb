@@ -18,6 +18,10 @@ class Course < ApplicationRecord
   scope :top_rated, -> { limit(3).order(average_rating: :desc, created_at: :desc) }
   scope :popular, -> { limit(3).order(enrollments_count: :desc, created_at: :desc) }
   scope :purchased, -> { limit(3).joins(:enrollments).where(enrollments: {user: current_user}).order(created_at: :desc) }
+  scope :published, -> { where(published: true)}
+  scope :unpublished, -> { where(published: false)}
+  scope :approved, -> { where(approved: true)}
+  scope :unapproved, -> { where(approved: false)}
   
   
   

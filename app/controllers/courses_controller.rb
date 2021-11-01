@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  before_action :set_course, only: %i[ show edit update destroy ]
+  before_action :set_course, only: [ :show, :edit, :update, :destroy, :approve, :unapprove ]
 
   # GET /courses or /courses.json
   def index
@@ -9,16 +9,35 @@ class CoursesController < ApplicationController
       #@q = Course.ransack(params[:q])
       #@courses = @q.result.includes(:user)
       @ransack_path = courses_path
-      @ransack_courses = Course.ransack(params[:courses_search], search_key: :courses_search)
+      @ransack_courses = Course.published.approved.ransack(params[:courses_search], search_key: :courses_search)
       #@courses = @ransack_courses.result.includes(:user)
       
       @pagy, @courses = pagy(@ransack_courses.result.includes(:user))
     #end
   end
-
+  
+  def approve
+    authorize @course, :approve?
+    @course.update_attribute(:approved, true )
+    redirect_to @course, notice: "Course approved and visible"
+  end  
+  
+  def unapprove
+    authorize @course, :unapprove?
+    @course.update_attribute(:approved, false )
+    redirect_to @course, notice: "Course unapproved and hidden"
+  end  
+  
+  def unapproved
+    @ransack_path = unapproved_courses_path
+    @ransack_courses = Course.unapproved.ransack(params[:courses_search], search_key: :courses_search)
+    @pagy, @courses = pagy(@ransack_courses.result.includes(:user))
+    render 'index'
+  end  
+  
   def purchased
     @ransack_path = purchased_courses_path
-    @ransack_courses = Course.joins(:enrollments).where(enrollments: {user: current_user}).ransack(params[:courses_search], search_key: :courses_search)
+    @ransack_courses = Course.where(user: current_user).ransack(params[:courses_search], search_key: :courses_search)
     @pagy, @courses = pagy(@ransack_courses.result.includes(:user))
     render 'index'
   end
@@ -99,6 +118,6 @@ class CoursesController < ApplicationController
     end
 
     def course_params
-      params.require(:course).permit(:title, :description, :short_description, :price, :level, :language)
+      params.require(:course).permit(:title, :description, :short_description, :price, :level, :language, :published)
     end
 end
