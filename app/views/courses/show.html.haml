@@ -9,13 +9,48 @@
 = link_to @course.title , courses_path(@course)
 %p
 .row
-  .col-lg-6
+  .col-lg-7
+    .p-5.mb-4.bg-light.rounded-3
+      %h2
+        .fa.fa-book
+        = @course.title
+      .p-3
+      .row
+      .fa.fa-clock
+      = @course.updated_at.strftime("%m/%Y")
+      .row
+      .fa.fa-globe-africa
+      = @course.language
+      .row
+      .fa.fa-signal
+      = @course.level
+      .p-3
+      = @course.description
+    
+    .row
+      .col-md-6
+        %h4
+          = pluralize(@course.lessons_count, 'Lesson')
+      .col-md-6
+        .text-end
+          .fa.fa-spinner
+          = number_to_percentage(@course.progress(current_user), precision: 1)
+    
+    %ol.list-group.list-group-numbered   
+      - @lessons.each do |lesson|
+        %li.list-group-item
+          = render 'lessons/lesson_preview', lesson: lesson
+    %h4
+      .fa.fa-comment
+      = pluralize(@enrollments_with_review.count, 'Review')
+    - @enrollments_with_review.each do |enrollment|
+      = render 'enrollments/enrollment', enrollment: enrollment
+      %p
+    
+    
+    
+  .col-lg-5
     = render 'courses/courses', course: @course
-  .col-lg-6
-    - if policy(@course).owner?
-      .d-grid.gap-2
-        = link_to 'Add lesson', new_course_lesson_path(@course, @lesson), class: "btn btn-primary btn-sm btn-block"
-    %p
-    - @lessons.each do |lesson|
-      = render 'lessons/lesson', lesson: lesson
+    
+  
 

@@ -40,6 +40,9 @@ gem 'exception_notification', '~> 4.4', '>= 4.4.3'
 
 gem 'pagy', '~> 5.1', '>= 5.1.3'
 
+gem 'chartkick', '~> 4.1'
+
+gem 'groupdate'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'

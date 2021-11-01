@@ -9,6 +9,21 @@ class HomeController < ApplicationController
   end
   
   def activity
-    @activities = PublicActivity::Activity.all
+    if current_user&.has_role?(:admin)
+      @activities = PublicActivity::Activity.all
+    else
+      redirect_to root_path, alert: "You don't have access to this page"
+    end  
+  end 
+  
+  def statistics
+    if current_user&.has_role?(:admin)
+      @users = User.all
+      @enrollments = Enrollment.all
+      @courses = Course.all
+    else
+      redirect_to root_path, alert: "You don't have access to this page"
+    end
   end  
+  
 end

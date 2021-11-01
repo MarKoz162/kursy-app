@@ -25,22 +25,22 @@
     %thead
       %tr
         %th ID
-        %th= sort_link(@q, :user_email)
+        %th= sort_link(@q, :user_email, "User")
         %th{:style => "min-width: 100px;"} 
-          = sort_link(@q, :course_title)
+          = sort_link(@q, :course_title, "Course")
         %th{:style => "min-width: 125px;"} 
           = sort_link(@q, :created_at) 
         %th
           = sort_link(@q, :price)
         %th{:style => "min-width: 135px;"}
           = sort_link(@q, :updated_at) 
-        %th
+        %th{:style => "min-width: 110px;"}
           .text-warning.fas.fa-comment
           Review
         %th{:style => "min-width: 110px;"}
-          = sort_link(@q, :rating) 
           .text-warning.fa.fa-star
-        %th
+          = sort_link(@q, :rating) 
+        %th Progress
         %th
         %th
   
@@ -55,12 +55,16 @@
           %td
             - if enrollment.rating.present?
               = enrollment.updated_at.strftime("%d/%b/%Y, %H:%M")
-          %td= enrollment.updated_at.strftime("%d/%b/%Y, %H:%M")
-          %td= enrollment.rating
           %td= enrollment.review
+          %td= enrollment.rating
+          %td= number_to_percentage(enrollment.course.progress(enrollment.user), precision: 1)
           %td= link_to 'See review', enrollment
-          %td= link_to 'Add review', edit_enrollment_path(enrollment)
-          %td= link_to 'Delete enrollmet', enrollment, method: :delete, data: { confirm: 'Are you sure?' }
+          %td
+            - if policy(enrollment).edit?
+              = link_to 'Add review', edit_enrollment_path(enrollment)
+          %td
+            - if policy(enrollment).destroy?
+              = link_to 'Delete enrollmet', enrollment, method: :delete, data: { confirm: 'Are you sure?' }
 
 %br
 
