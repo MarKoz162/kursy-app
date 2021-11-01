@@ -44,6 +44,8 @@ gem 'chartkick', '~> 4.1'
 
 gem 'groupdate'
 
+gem 'rails-erd', group: :development 
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
