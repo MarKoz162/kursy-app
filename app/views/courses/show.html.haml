@@ -36,10 +36,11 @@
           .fa.fa-spinner
           = number_to_percentage(@course.progress(current_user), precision: 1)
     
-    %ol.list-group.list-group-numbered   
+    %ol.list-group.lesson-sortable  
       - @lessons.each do |lesson|
-        %li.list-group-item
-          = render 'lessons/lesson_preview', lesson: lesson
+        = content_tag "div", id: "lesson-#{lesson.id}", data: { model_name: lesson.class.name.underscore, update_url: course_lesson_sort_path(@course, lesson)} do
+          %li.list-group-item
+            = render 'lessons/lesson_preview', lesson: lesson
     %h4
       .fa.fa-comment
       = pluralize(@enrollments_with_review.count, 'Review')
@@ -52,5 +53,7 @@
   .col-lg-5
     = render 'courses/courses', course: @course
     
+    
+  
   
 
