@@ -1,13 +1,14 @@
 class LessonsController < ApplicationController
-  before_action :set_lesson, only: %i[ show edit update destroy ]
+  before_action :set_lesson, only: [ :show, :edit, :update, :destroy ]
+  skip_before_action :verify_authenticity_token, only: [:sort]
   
   def sort
     @course = Course.friendly.find(params[:course_id])
-    lesson = Lesson.friendly.find(params[:lesson_id])
-    authorize lesson, :edit?
-    lesson.update(lesson_params)
+    @lesson = Lesson.friendly.find(params[:lesson_id])
+    authorize @lesson
+    @lesson.update(lesson_params)
     render body: nil
-  end  
+  end
   
   def index
     @lessons = Lesson.all
