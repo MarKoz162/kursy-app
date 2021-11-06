@@ -49,6 +49,12 @@ gem 'rails-erd', group: :development
 gem 'ranked-model'
 
 gem "aws-sdk-s3", require: false
+
+gem 'active_storage_validations'
+
+gem "image_processing", "~> 1.0"
+
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
