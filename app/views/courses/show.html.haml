@@ -14,7 +14,6 @@
       %h2
         .fa.fa-book
         = @course.title
-        
       - if @course.avatar.attached?
         = image_tag @course.avatar, width: "200px"
       .p-3
