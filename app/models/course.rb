@@ -9,6 +9,7 @@ class Course < ApplicationRecord
   has_many :lessons, dependent: :destroy
   has_many :enrollments, dependent: :restrict_with_error
   has_many :user_lessons, through: :lessons
+  has_one_attached :avatar
   
   def to_s
       title
