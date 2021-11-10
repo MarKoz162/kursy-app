@@ -14,6 +14,7 @@ class User < ApplicationRecord
   has_many :courses, dependent: :nullify
   has_many :enrollments
   has_many :user_lessons
+  has_many :comments, dependent: :nullify
   
   extend FriendlyId
   friendly_id :email, use: :slugged
