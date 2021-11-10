@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       patch :unapprove
     end  
     resources :lessons do
+      resources :comments, only: [:create, :destroy]
       put :sort
     end  
     resources :enrollments, only: [:new,:create]
