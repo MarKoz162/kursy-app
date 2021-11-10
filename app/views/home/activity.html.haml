@@ -19,11 +19,17 @@
           = link_to activity.trackable, course_lesson_path(activity.trackable.course, activity.trackable)
         - else
           LESSON WAS DELETED
+      - elsif activity.trackable_type == "Comment"
+        - if Comment.where(id: activity.trackable_id).present?
+          = link_to activity.trackable, course_lesson_path(activity.trackable.lesson.course, activity.trackable.lesson)
+        - else
+          COMMENT WAS DELETED
       - else
         = link_to activity.trackable, activity.trackable
       = crud_label(activity.key.match(/\.(.*)/)[1])
       by
-      = link_to activity.owner, user_path(activity.owner)
+      - if activity.owner.present?
+        = link_to activity.owner, user_path(activity.owner)
       = activity.parameters
       
 %p      

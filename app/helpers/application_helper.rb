@@ -18,6 +18,8 @@ module ApplicationHelper
         "<i class='fa fa-book'></i>".html_safe
       when 'Lesson'
         "<i class='fa fa-book-open'></i>".html_safe
+      when 'Enrollment'
+        "<i class='fa fa-lock-open'></i>".html_safe  
     end      
   end
   

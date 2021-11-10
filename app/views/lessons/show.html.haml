@@ -17,6 +17,22 @@
 .row
   .col-lg-8
     = render 'lessons/lesson', lesson: @lesson
+<<<<<<< HEAD
+=======
+    %p
+    %h4
+      .fa.fa-comment 
+      Comments:
+      = @lesson.comments_count
+    .card
+      .card-header
+        New Commnet
+      .card-body
+        = render 'lessons/comments/form'
+    %p
+    - @comments.each do |comment|
+      = render 'lessons/comments/comment', comment: comment
+>>>>>>> d4b7e80... Add_commets_view_in_lesson_and_activity
   .col-lg-4
     %ul.list-group.lesson-sortable
       - @lessons.each do |lesson|
@@ -30,7 +46,6 @@
 
 
 = link_to 'Back', course_path(@lesson.course)
-
 
 
 
