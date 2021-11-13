@@ -2,8 +2,10 @@ class Course < ApplicationRecord
   include PublicActivity::Model
   tracked owner: Proc.new{ |controller, model| controller.current_user}
   validates :title, :short_description, :language, :price, :level, presence: true
-  validates :description, presence: true
-  validates :title, uniqueness: true
+  validates :description, presence: true, length: { minimum: 5, maximum: 3000}
+  validates :short_description, presence: true, length: { minimum: 5}
+  validates :title, uniqueness: true,length: { maximum: 70 }
+  validates :price, numericality: { greater_than_or_equal_to: 0 }
   
   belongs_to :user, counter_cache: true
   has_many :lessons, dependent: :destroy
@@ -11,7 +13,7 @@ class Course < ApplicationRecord
   has_many :user_lessons, through: :lessons
   
   has_one_attached :avatar
-  validates :avatar, attached: true, content_type: ['image/png', 'image/jpg', 'image/jpeg'],size: { less_than: 500.kilobytes , message: 'size shoul be under 500 kilobytes' }
+  validates :avatar, presence: true,content_type: ['image/png', 'image/jpg', 'image/jpeg'],size: { less_than: 500.kilobytes , message: 'size shoul be under 500 kilobytes' }
   
   
   def to_s

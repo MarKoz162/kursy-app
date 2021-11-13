@@ -60,11 +60,15 @@ class LessonsController < ApplicationController
 
   def destroy
     authorize @lesson
-    @lesson.destroy
     respond_to do |format|
-      format.html { redirect_to course_path(@course), notice: "Lesson was successfully destroyed." }
-      format.json { head :no_content }
+      if @lesson.destroy
+        format.html { redirect_to course_path(@course), notice: "Lesson was successfully destroyed." }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to course_path(@course), alert: "Somthing went wrong" }
+      end 
     end
+
   end
 
   private

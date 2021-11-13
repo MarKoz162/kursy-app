@@ -1,6 +1,6 @@
 class UserLesson < ApplicationRecord
   belongs_to :user
-  belongs_to :lesson, dependent: :destroy
+  belongs_to :lesson
   
   validates :user,:lesson, presence: true
   
