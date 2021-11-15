@@ -6,10 +6,13 @@
       = content_for?(:title) ? yield(:title) : "kursy-app"
     %meta{:content => "width=device-width,initial-scale=1", :name => "viewport"}/
     %meta{:content => "text/html; charset-UTF-8", "http-equiv" => "Content-Type"}/
+    %meta{description: 'Platforma do nauki i dzielenia się umiejętnościami online'}/
+    %meta{keywords: 'online edukacja, kursy internetowe, video tutoriale, poradniki internetowe ,udemy clone'}/
+    %meta{author: 'Marcin Kozdras'}/
     = csrf_meta_tags
     = csp_meta_tag
-    = stylesheet_link_tag '//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/le-frog/jquery-ui.min.css'
-    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = stylesheet_pack_tag '//ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/le-frog/jquery-ui.min.css'
+    = stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
   %body
     = render 'layouts/header'
