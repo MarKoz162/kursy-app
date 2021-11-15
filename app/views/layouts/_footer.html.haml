@@ -1,10 +1,11 @@
 %hr
-%footer.bg-grey
+%footer.bg-dark{:style => "color: white;" }
   .container
     .row
       .col-md-4
         Copyright
         ©
         = Time.now.year
-    %p
+    
+      = link_to "Privacy policy", privacy_policy_path
       
