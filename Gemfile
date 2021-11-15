@@ -54,6 +54,8 @@ gem 'active_storage_validations'
 
 gem "image_processing", "~> 1.0"
 
+gem 'recaptcha', '~> 5.8', '>= 5.8.1'
+
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
