@@ -2,7 +2,8 @@ Rails.application.routes.draw do
   resources :enrollments, expect: [:new,:create] do
     get :my_students, on: :collection
   end  
-  devise_for :users
+  devise_for :users, controllers: { registrations: 'users/registrations' }
+
   resources :courses do
     get :purchased, :pending_review, :created, :unapproved, on: :collection 
     member do
@@ -18,9 +19,9 @@ Rails.application.routes.draw do
   end
   resources :users, only: [:index, :edit, :show, :update]
   root 'home#index'
-  get "privacy_policy", to: "static_pages#privacy_policy"
   get "activity", to: "home#activity" 
   get "statistics", to: "home#statistics"
+  get "privacy_policy", to: "home#privacy_policy"
 
   namespace :charts do
     get 'users_per_day'
@@ -28,5 +29,6 @@ Rails.application.routes.draw do
     get 'course_popularity'
     get 'money_makers'
   end
-
+  
+  
 end
