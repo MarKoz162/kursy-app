@@ -67,14 +67,8 @@ class LessonsController < ApplicationController
         format.html { redirect_to course_path(@course), notice: "Lesson was successfully destroyed." }
         format.json { head :no_content }
       else
-<<<<<<< HEAD
-        format.html { redirect_to course_path(@course), alert: "Somthing went wrong" }
+        format.html { redirect_to course_path(@course), alert: "Somthing wen't wrong" }
       end 
-=======
-        format.html { redirect_to course_path(@course), notice: "Somthing went wrong." }
-        format.json { head :no_content }
-      end
->>>>>>> d4b7e80... Add_commets_view_in_lesson_and_activity
     end
 
   end
