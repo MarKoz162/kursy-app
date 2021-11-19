@@ -54,7 +54,15 @@
   .col-lg-5
     = render 'courses/courses', course: @course
     
-    
+%h4 
+  .fa.fa-graduation-cap
+  Similar Courses
+
+- Course.all.where.not(id: @course.id).each do |course|
+  .row
+  - unless @course.tags.pluck(:id).intersection(course.tags.pluck(:id)).count.zero?
+    .card-columns
+      = render 'courses/courses', course: course 
   
   
 

@@ -88,6 +88,10 @@
                   Unapproved
                   .badge.bg-info
                     = Course.unapproved.count
+              %li
+                =link_to tags_path, class:"dropdown-item" do
+                  .fa.fa-tags
+                  Tags
         
               
       - if current_user        
