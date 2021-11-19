@@ -64,6 +64,8 @@ gem 'omniauth-github', '~> 2.0'
 
 gem 'omniauth-facebook', '~> 9.0'
 
+gem 'wicked', '~> 1.3', '>= 1.3.4'
+
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
