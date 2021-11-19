@@ -31,5 +31,6 @@ Rails.application.routes.draw do
   end
   
   resources :tags, only: [:create, :index, :destroy]
+  resources :course_creator
   
 end
