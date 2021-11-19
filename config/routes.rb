@@ -16,6 +16,8 @@ Rails.application.routes.draw do
       put :sort
     end  
     resources :enrollments, only: [:new,:create]
+    resources :course_creator, controller: 'courses/course_creator'
+  
   end
   resources :users, only: [:index, :edit, :show, :update]
   root 'home#index'
@@ -31,6 +33,4 @@ Rails.application.routes.draw do
   end
   
   resources :tags, only: [:create, :index, :destroy]
-  resources :course_creator
-  
 end

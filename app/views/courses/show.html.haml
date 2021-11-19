@@ -14,6 +14,7 @@
       %h2
         .fa.fa-book
         = @course.title
+        = link_to "course creator", course_course_creator_index_path(@course)
       .p-3
       .row
       .fa.fa-clock
