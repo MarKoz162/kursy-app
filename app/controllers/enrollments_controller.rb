@@ -32,6 +32,8 @@ class EnrollmentsController < ApplicationController
       redirect_to new_course_enrollments_paht(@course)
     else
       @enrollment = current_user.buy_course(@course)
+      EnrollmentMailer.student_enrollment(@enrollment).deliver_now
+      EnrollmentMailer.teacher_enrollment(@enrollment).deliver_now
       redirect_to course_path(@course), notice: "You are enrolled!"
     end
   end
