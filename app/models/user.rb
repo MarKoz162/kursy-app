@@ -17,6 +17,11 @@ class User < ApplicationRecord
   has_many :user_lessons
   has_many :comments, dependent: :nullify
   
+  after_create do
+    UserMailer.new_user(self).deliver_later
+  end
+  
+  
   extend FriendlyId
   friendly_id :email, use: :slugged
   
