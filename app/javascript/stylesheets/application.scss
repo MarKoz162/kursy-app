@@ -1,11 +1,18 @@
 @import "bootstrap";
 @import "bootstrap/scss/bootstrap.scss";
+@import "selectize/dist/css/selectize";
+@import "selectize/dist/css/selectize.default";
 
 footer {
-    position: fixed;
+    position: relative;
     height: 50px;
     bottom: 0;
+    left: 0;
     width: 100%;
+}
+
+.container {
+    min-height: 100vh;
 }
 
 .form-control.is-invalid{ background-image: none;}

@@ -20,7 +20,7 @@ require("@rails/actiontext")
 import "trix"
 import "@rails/actiontext"
 import "chartkick/chart.js"
-
+require("selectize")
 
 global.$ = require("jquery")
 require("jquery") 
@@ -47,4 +47,21 @@ $(document).on('turbolinks:load', function(){
       console.log("stop called when finishing sort of cards");
     }
   });
+  if ($('.selectize')){
+      $('.selectize').selectize({
+        sortfield: 'text'
+      });
+  }
+  
+  $(".selectize-tags").selectize({
+    create: function(input, callback) {
+      $.post('/tags.json', { tag: { name: input } })
+        .done(function(response){
+          console.log(response)
+          callback({value: response.id, text: response.name });
+        })
+    }
+  });  
+
+  
 });
