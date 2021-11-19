@@ -6,7 +6,7 @@
 
 = link_to 'Courses', courses_path
 \/
-= link_to @course.title , courses_path(@course)
+= link_to @course.title , course_path(@course)
 %p
 .row
   .col-lg-7
@@ -14,7 +14,7 @@
       %h2
         .fa.fa-book
         = @course.title
-        = link_to "course creator", course_course_creator_index_path(@course)
+       
       .p-3
       .row
       .fa.fa-clock
@@ -58,12 +58,12 @@
 %h4 
   .fa.fa-graduation-cap
   Similar Courses
-
-- Course.all.where.not(id: @course.id).each do |course|
-  .row
-  - unless @course.tags.pluck(:id).intersection(course.tags.pluck(:id)).count.zero?
-    .card-columns
-      = render 'courses/courses', course: course 
-  
+.card-group
+  - Course.all.where.not(id: @course.id).each do |course|
+    .row
+    - unless @course.tags.pluck(:id).intersection(course.tags.pluck(:id)).count.zero?
+      .col{style: 'margin: 20px'}
+        = render 'courses/courses', course: course 
+    
   
 

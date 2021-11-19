@@ -56,7 +56,7 @@
       - if policy(course).owner?
         = link_to 'Add lesson', new_course_lesson_path(course, @lesson), class: "btn btn-primary btn-sm"
         = link_to 'Statistics', statistics_course_path(course), class: "btn btn-sm btn-info"
-      %td= link_to 'Edit', edit_course_path(course), class: 'btn btn-sm btn-warning'
+      %td= link_to "Edit", course_course_creator_index_path(course), class: 'btn btn-sm btn-warning'
       %td= link_to 'Destroy', course, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' 
     .card-footer
       - course.tags.each do |tag|
