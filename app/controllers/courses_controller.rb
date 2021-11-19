@@ -1,21 +1,13 @@
 class CoursesController < ApplicationController
   skip_before_action :authenticate_user!, only: [:show]
-  before_action :set_course, only: [ :show, :edit, :update, :destroy, :approve, :unapprove, :statistics ]
-  before_action :set_tags, expect: [:statistics, :edit, :create, :update, :destroy, :show, :new]
+  before_action :set_course, only: [ :show, :destroy, :approve, :unapprove, :statistics ]
+  before_action :set_tags, expect: [:statistics, :create, :destroy, :show, :new]
   
-  # GET /courses or /courses.json
   def index
-    #if params[:title]
-      #@courses = Course.where("title ILIKE ?", "%"+params[:title]+"%")
-    #else
-      #@q = Course.ransack(params[:q])
-      #@courses = @q.result.includes(:user)
-      @ransack_path = courses_path
-      @ransack_courses = Course.published.approved.ransack(params[:courses_search], search_key: :courses_search)
-      #@courses = @ransack_courses.result.includes(:user)
-      
-      @pagy, @courses = pagy(@ransack_courses.result.includes(:user, :course_tags, :course_tags => :tag))
-    #end
+     @ransack_path = courses_path
+     @ransack_courses = Course.published.approved.ransack(params[:courses_search], search_key: :courses_search)
+    
+     @pagy, @courses = pagy(@ransack_courses.result.includes(:user, :course_tags, :course_tags => :tag))
   end
   
   def statistics
@@ -76,35 +68,19 @@ class CoursesController < ApplicationController
     @tags = Tag.all
   end
 
-  def edit
-    authorize @course
-  end
-
   def create
     @course = Course.new(course_params)
     authorize @course
+    @course.description = 'Description'
+    @course.short_description = 'Short Description'
     @course.user = current_user
     respond_to do |format|
       if @course.save
-        format.html { redirect_to @course, notice: "Course was successfully created." }
+        format.html { redirect_to course_course_creator_index_path(@course), notice: "Course was successfully created." }
         format.json { render :show, status: :created, location: @course }
       else
         @tags = Tag.all
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @course.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def update
-    authorize @course
-    respond_to do |format|
-      if @course.update(course_params)
-        format.html { redirect_to @course, notice: "Course was successfully updated." }
-        format.json { render :show, status: :ok, location: @course }
-      else
-        @tags = Tag.all
-        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @course.errors, status: :unprocessable_entity }
       end
     end
