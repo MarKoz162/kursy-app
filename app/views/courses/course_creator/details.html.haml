@@ -1,1 +1,12 @@
-= render 'courses/course_creator/template'
+= render layout: 'courses/course_creator/step' do   
+  = simple_form_for @course, url: course_course_creator_path, method: :put do |f|
+    = f.input :language, collection: Course.languages, include_blank: false
+    = f.input :level, collection: Course.levels, include_blank: false
+    = f.input :price, collection: [0, 9, 19, 49, 99, 149, 199], include_blank: false
+    = f.input :published
+  
+    = f.label :tags
+    = f.select :tag_ids, @tags.all.pluck(:name, :id), {}, { multiple: true, class: "selectize-tags" }
+  
+    = f.button :submit, class: 'btn btn-sm btn-success'
+   

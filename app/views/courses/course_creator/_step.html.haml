@@ -1,0 +1,47 @@
+- content_for :title do
+  Corsego 
+  \| 
+  Editing course
+  = @course.title
+
+= link_to 'Courses', courses_path
+\/
+= link_to course_path(@course) do
+  = @course.title
+\/
+= link_to course_course_creator_path(@course, :basic_info) do
+  Edit
+  = step.to_s.humanize
+.card
+  .progress
+    .progress-bar{style: "width: #{@progress}%"}= number_to_percentage(@progress, precision: 0)
+  .card-header
+    %h1
+      = wizard_steps.index(step) + 1
+      \/
+      = wizard_steps.count
+      = step.to_s.humanize
+   
+  .card-body
+    - if @course.errors.any?
+      .text-danger
+        - @course.errors.full_messages.each do |msg|
+          %li= msg
+      %p
+    = yield
+   
+  .card-footer
+    .float-start
+      - if (wizard_steps.index(step) + 1).to_d == 1
+        = link_to course_path(@course), class: 'btn btn-sm btn-secondary' do
+          .fa.fa-arrow-left
+          Cancel
+      - else
+        = link_to previous_wizard_path, class: 'btn btn-sm btn-info' do
+          .fa.fa-arrow-left
+          Previous
+        
+    .float-end
+      = link_to next_wizard_path, class: 'btn btn-sm btn-info' do
+        .fa.fa-arrow-right
+        Next

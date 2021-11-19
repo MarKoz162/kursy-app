@@ -1,0 +1,4 @@
+= render layout: 'courses/course_creator/step' do   
+  = simple_form_for @course, url: course_course_creator_path, method: :put do |f|
+    = f.input :published
+    = f.button :submit, class: 'btn btn-sm btn-success'
