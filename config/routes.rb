@@ -30,5 +30,6 @@ Rails.application.routes.draw do
     get 'money_makers'
   end
   
+  resources :tags, only: [:create, :index, :destroy]
   
 end

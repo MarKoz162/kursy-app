@@ -1,7 +1,8 @@
 class CoursesController < ApplicationController
   skip_before_action :authenticate_user!, only: [:show]
   before_action :set_course, only: [ :show, :edit, :update, :destroy, :approve, :unapprove, :statistics ]
-
+  before_action :set_tags, expect: [:statistics, :edit, :create, :update, :destroy, :show, :new]
+  
   # GET /courses or /courses.json
   def index
     #if params[:title]
@@ -13,7 +14,7 @@ class CoursesController < ApplicationController
       @ransack_courses = Course.published.approved.ransack(params[:courses_search], search_key: :courses_search)
       #@courses = @ransack_courses.result.includes(:user)
       
-      @pagy, @courses = pagy(@ransack_courses.result.includes(:user))
+      @pagy, @courses = pagy(@ransack_courses.result.includes(:user, :course_tags, :course_tags => :tag))
     #end
   end
   
@@ -66,11 +67,13 @@ class CoursesController < ApplicationController
     authorize @course
     @lessons = @course.lessons.rank(:row_order)
     @enrollments_with_review = @course.enrollments.reviewed
+    @tags = Tag.all
   end
 
   def new
     @course = Course.new
     authorize @course
+    @tags = Tag.all
   end
 
   def edit
@@ -86,6 +89,7 @@ class CoursesController < ApplicationController
         format.html { redirect_to @course, notice: "Course was successfully created." }
         format.json { render :show, status: :created, location: @course }
       else
+        @tags = Tag.all
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @course.errors, status: :unprocessable_entity }
       end
@@ -99,6 +103,7 @@ class CoursesController < ApplicationController
         format.html { redirect_to @course, notice: "Course was successfully updated." }
         format.json { render :show, status: :ok, location: @course }
       else
+        @tags = Tag.all
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @course.errors, status: :unprocessable_entity }
       end
@@ -124,6 +129,10 @@ class CoursesController < ApplicationController
     end
 
     def course_params
-      params.require(:course).permit(:title, :description, :short_description, :price, :level, :language, :published, :avatar)
+      params.require(:course).permit(:title, :description, :short_description, :price, :level, :language, :published, :avatar, tag_ids: [])
+    end
+    
+    def set_tags
+      @tags = Tag.all.where.not(course_tags_count: 0).order(course_tags_count: :desc)
     end
 end
