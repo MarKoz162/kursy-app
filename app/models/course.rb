@@ -32,6 +32,11 @@ class Course < ApplicationRecord
   scope :approved, -> { where(approved: true)}
   scope :unapproved, -> { where(approved: false)}
   
+  def calculate_income
+    update_column :income, (enrollments.map(&:price).sum)
+    user.calculate_course_income
+  end
+  
   
   
   has_rich_text :description

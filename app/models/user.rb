@@ -26,6 +26,16 @@ class User < ApplicationRecord
   friendly_id :email, use: :slugged
   
   
+  def calculate_course_income
+    update_column :course_income, (courses.map(&:income).sum)
+    update_column :balance, (course_income - enrollment_expences)
+  end
+
+  def calculate_enrollment_expences
+    update_column :enrollment_expences, (enrollments.map(&:price).sum)
+    update_column :balance, (course_income - enrollment_expences)
+  end
+  
   def username
     if email.present?
       self.email.split(/@/).first

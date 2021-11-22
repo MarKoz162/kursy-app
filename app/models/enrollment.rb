@@ -33,6 +33,12 @@ class Enrollment < ApplicationRecord
     course.update_rating
   end
   
+  after_create :calculate_balance
+  after_destroy :calculate_balance
+  def calculate_balance
+    course.calculate_income
+    user.calculate_enrollment_expences
+  end
   
   
   protected

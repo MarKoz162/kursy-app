@@ -1,8 +1,9 @@
 class EnrollmentsController < ApplicationController
   before_action :set_enrollment, only: %i[ show edit update destroy ]
   before_action :set_course, only: [:new,:create]
+  
   def index
-     @ransack_path = enrollments_path
+    @ransack_path = enrollments_path
     @q = Enrollment.ransack(params[:q])
     @pagy, @enrollments = pagy(@q.result.includes(:user))
     authorize @enrollments
@@ -28,14 +29,25 @@ class EnrollmentsController < ApplicationController
   
   def create
     if @course.price > 0
-      flash[:alert] = "You can not access paid courses yet."
-      redirect_to new_course_enrollments_paht(@course)
-    else
-      @enrollment = current_user.buy_course(@course)
-      EnrollmentMailer.student_enrollment(@enrollment).deliver_now
-      EnrollmentMailer.teacher_enrollment(@enrollment).deliver_now
-      redirect_to course_path(@course), notice: "You are enrolled!"
+      customer = Stripe::Customer.create(
+        email: params[:stripeEmail],
+        source: params[:stripeToken]
+      )
+      charge = Stripe::Charge.create(
+        customer:    customer.id,
+        amount:      (@course.price * 100).to_i,
+        description: @course.title,
+        currency:    'usd'
+      )
     end
+    @enrollment = current_user.buy_course(@course)
+    EnrollmentMailer.student_enrollment(@enrollment).deliver_now
+    EnrollmentMailer.teacher_enrollment(@enrollment).deliver_now
+    redirect_to course_path(@course), notice: "You are enrolled!"
+    
+    rescue Stripe::CardError => e
+      flash[:error] = e.message
+      redirect_to new_course_enrollment_path(@course)
   end
   
   def update
