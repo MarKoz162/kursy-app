@@ -7,12 +7,12 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   
   config.action_mailer.smtp_settings = {
-    port: 587,
-    address: Rails.application.credentials.address,
-    user_name: Rails.application.credentials.user_name,
-    password: Rails.application.credentials.password,
-    authenticate: :plain,
-    enable_starttls_auto: true
+  address: "smtp.gmail.com",
+  port: 587,
+  user_name: Rails.application.credentials.google[:gmail_username],
+  password: Rails.application.credentials.google[:app_password],
+  authentication: :plain,
+  enable_starttls_auto: true
   }
   
   Rails.application.config.middleware.use ExceptionNotification::Rack,
