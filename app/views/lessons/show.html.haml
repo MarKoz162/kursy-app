@@ -42,7 +42,7 @@
               = render 'lessons/lesson_preview', lesson: lesson 
 
 
-= link_to 'Back', course_path(@lesson.course)
-
+= link_to 'Back', course_path(@lesson.course), class: "btn btn-sm btn-secondary"
+= link_to 'New Lesson', new_course_lesson_path,class: "btn btn-sm btn-info"
 
 
