@@ -37,6 +37,15 @@
     = 'last_sign_in_ip'.humanize
     = user.last_sign_in_ip
   .card-footer
+    course_income
+    = user.course_income
+    .row
+    enrollment_expences
+    = user.enrollment_expences
+    .row
+    balance
+    = user.balance
+  .card-footer
     Courses Created:
     = user.courses_count
     Enrollments:
